@@ -1,0 +1,8 @@
+arb-dir: lib/src/core/l10n/localization
+output-dir: lib/src/core/l10n/generated_class
+template-arb-file: intl_en.arb
+output-localization-file: app_localizations.dart
+generate-to-class: true
+nullable-getter: false
+synthetic-package: false
+format: true

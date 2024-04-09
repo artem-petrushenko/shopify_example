@@ -1,0 +1,49 @@
+on:
+  # Trigger the workflow on push in the main, master, dev and uat branches
+  push:
+    branches:
+      - master
+      - main
+      - dev
+      - uat
+
+name: Build APK
+
+jobs:
+  build:
+    name: Build and Release new apk
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+      - name: Extract version from pubspec.yaml
+        id: extract_version
+        # Extracts the version from pubspec.yaml and sets it as an output
+        run: |
+          version=$(grep -o 'version:.*' pubspec.yaml | cut -d' ' -f2)
+          major=$(echo $version | awk -F'[.+]' '{print $1}' | tr -d '[:space:]')
+          minor=$(echo $version | awk -F'[.+]' '{print $2}' | tr -d '[:space:]')
+          patch=$(echo $version | awk -F'[.+]' '{print $3}' | tr -d '[:space:]')
+          echo "::set-output name=major::$major"
+          echo "::set-output name=minor::$minor"
+          echo "::set-output name=patch::$patch"
+      # Set Flutter dependencies
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.5'
+          channel: 'stable'
+      - run: flutter pub get
+      - run: flutter pub run build_runner build
+
+      # Run the tests and continue even if they fail
+      - run: flutter test
+        continue-on-error: true
+      # Build the APK and set the build number to the run number
+      - run: flutter build apk --release --build-number=${{ github.run_number }}
+      # Push the APK to the Releases section of the repository
+      - name: Push to Releases
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "build/app/outputs/apk/release/*-release.apk"
+          tag: v${{ steps.extract_version.outputs.major }}.${{ steps.extract_version.outputs.minor }}.${{ steps.extract_version.outputs.patch }}(${{ github.run_number }})
+          token: ${{ secrets.AUTO_DEPLOY }}
