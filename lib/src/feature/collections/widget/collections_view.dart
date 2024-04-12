@@ -46,9 +46,9 @@ class CollectionListView extends StatelessWidget {
                           collections: state.oldCollections),
                   success: (state) =>
                       CollectionListBuilder(collections: state.collections),
-                  empty: (_) => const Center(child: Text('No collections')),
+                  empty: (_) => const Text('No collections'),
                   failure: (state) => state.oldCollections.isEmpty
-                      ? const CircularProgressIndicator()
+                      ? const Text('Failed to load collections')
                       : CollectionListBuilder(
                           collections: state.oldCollections),
                   orElse: () => const CircularProgressIndicator(),

@@ -1,7 +1,6 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shopify_example/src/common/widget/refresh_indicator/default_refresh_indicator.dart';
 import 'package:shopify_example/src/feature/initialization/widget/dependency_scope.dart';
 import 'package:shopify_example/src/feature/products/bloc/fetch_products/fetch_product_list_bloc.dart';
 import 'package:shopify_example/src/feature/products/widget/product_list_builder.dart';
@@ -28,27 +27,27 @@ class ProductListView extends StatelessWidget {
               ),
             ),
             builder: (BuildContext context, FetchProductListState state) =>
-                RefreshIndicator(
-              onRefresh: () async {
-                final completer = Completer();
+                DefaultRefreshIndicator(
+              onRefresh: (completer) async {
                 context
                     .read<FetchProductListBloc>()
                     .add(FetchProductListEvent.fetchProductList(
                       completer: completer,
                     ));
-                return completer.future;
               },
-              child: state.maybeMap(
-                success: (state) =>
-                    ProductListBuilder(products: state.products),
-                failure: (state) => state.oldProducts.isNotEmpty
-                    ? ProductListBuilder(products: state.oldProducts)
-                    : const Text('Failure'),
-                empty: (_) => const Text('Empty'),
-                loading: (state) => state.oldProducts.isNotEmpty
-                    ? ProductListBuilder(products: state.oldProducts)
-                    : const CircularProgressIndicator(),
-                orElse: () => const CircularProgressIndicator(),
+              child: Center(
+                child: state.maybeMap(
+                  success: (state) =>
+                      ProductListBuilder(products: state.products),
+                  failure: (state) => state.oldProducts.isNotEmpty
+                      ? ProductListBuilder(products: state.oldProducts)
+                      : const Text('Failure'),
+                  empty: (_) => const Text('Empty'),
+                  loading: (state) => state.oldProducts.isNotEmpty
+                      ? ProductListBuilder(products: state.oldProducts)
+                      : const CircularProgressIndicator(),
+                  orElse: () => const CircularProgressIndicator(),
+                ),
               ),
             ),
           ),

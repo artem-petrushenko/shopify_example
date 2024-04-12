@@ -5,16 +5,20 @@ class ProductCard extends StatelessWidget {
   const ProductCard({
     super.key,
     required this.product,
+    this.onTap,
   });
 
   final ProductModel product;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) => Card(
         child: ListTile(
-          title: const Text('Product title'),
+          onTap: onTap,
+          title: Text(product.title),
           subtitle: const Text('Product description'),
-          trailing: const Text('Product price'),
+          trailing: Text(
+              '${product.priceRange.maxVariantPrice.amount} ${product.priceRange.maxVariantPrice.currencyCode}'),
         ),
       );
 }

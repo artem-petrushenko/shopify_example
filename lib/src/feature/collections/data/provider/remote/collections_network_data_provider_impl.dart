@@ -1,7 +1,8 @@
 import 'package:shopify_example/src/core/components/graphql_client/graph_ql_client.dart';
 import 'package:shopify_example/src/core/components/graphql_client/query/get_collections.dart';
 import 'package:shopify_example/src/feature/collections/data/provider/remote/collections_network_data_provider.dart';
-import 'package:shopify_example/src/feature/collections/model/collection_model.dart';
+import 'package:shopify_example/src/feature/collections/model/collections_response_model.dart';
+import 'package:shopify_example/src/feature/products/model/collection_model.dart';
 
 class CollectionsNetworkDataProviderImpl
     implements CollectionsNetworkDataProvider {
@@ -15,18 +16,17 @@ class CollectionsNetworkDataProviderImpl
   Future<List<CollectionModel>> getCategories({
     final bool reverse = false,
     final String? cursor,
+    final int first = 8,
   }) async {
     final result = await _shopifyGraphQLClient.query(
-      document: getCollectionQuery,
+      document: getCollectionsQuery,
       variables: {
-        'first': 10,
+        'first': first,
         'reverse': reverse,
         'cursor': cursor,
       },
     );
-    return [
-      CollectionModel(),
-      CollectionModel(),
-    ];
+    final response = CollectionsResponseModel.fromJson(result.data ?? {});
+    return response.collections.collections;
   }
 }
