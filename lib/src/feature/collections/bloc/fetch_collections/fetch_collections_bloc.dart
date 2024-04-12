@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:shopify_example/src/core/logger.dart';
 import 'package:shopify_example/src/feature/collections/data/repository/collections_repository.dart';
-import 'package:shopify_example/src/feature/products/model/collection_model.dart';
+import 'package:shopify_example/src/feature/collections/model/collection_model.dart';
 
 part 'fetch_collections_event.dart';
 

@@ -1,6 +1,7 @@
 import 'package:graphql/client.dart';
+import 'package:shopify_example/src/feature/collection/data/repository/collection_repository.dart';
 import 'package:shopify_example/src/feature/collections/data/repository/collections_repository.dart';
-import 'package:shopify_example/src/feature/products/data/repository/products_repository.dart';
+import 'package:shopify_example/src/feature/product_details/data/repository/products_repository.dart';
 
 /// {@template dependencies}
 /// Dependencies container
@@ -12,6 +13,7 @@ base class Dependencies {
   late final GraphQLClient graphQLClient;
   late final ProductsRepository productsRepository;
   late final CollectionsRepository collectionsRepository;
+  late final CollectionRepository collectionRepository;
 }
 
 /// {@template initialization_result}

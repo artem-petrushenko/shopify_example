@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:shopify_example/src/feature/products/model/collection_list_model.dart';
+import 'package:shopify_example/src/feature/collections/model/collection_list_model.dart';
 
 part 'collections_response_model.g.dart';
 
