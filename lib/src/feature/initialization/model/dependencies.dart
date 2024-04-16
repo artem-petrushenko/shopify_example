@@ -1,4 +1,5 @@
 import 'package:graphql/client.dart';
+import 'package:shopify_example/src/feature/auth/data/repository/authentication_repository.dart';
 import 'package:shopify_example/src/feature/collection/data/repository/collection_repository.dart';
 import 'package:shopify_example/src/feature/collections/data/repository/collections_repository.dart';
 import 'package:shopify_example/src/feature/product_details/data/repository/products_repository.dart';
@@ -14,6 +15,7 @@ base class Dependencies {
   late final ProductsRepository productsRepository;
   late final CollectionsRepository collectionsRepository;
   late final CollectionRepository collectionRepository;
+  late final AuthenticationRepository authenticationRepository;
 }
 
 /// {@template initialization_result}

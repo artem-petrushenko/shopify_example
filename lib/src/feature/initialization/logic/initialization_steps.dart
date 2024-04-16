@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:graphql/client.dart';
 import 'package:shopify_example/src/core/components/graphql_client/graph_ql_client.dart';
 import 'package:shopify_example/src/core/components/graphql_client/graph_ql_endpoint.dart';
+import 'package:shopify_example/src/feature/auth/data/provider/remote/authentication_network_data_source_impl.dart';
+import 'package:shopify_example/src/feature/auth/data/repository/authentication_repository_impl.dart';
 import 'package:shopify_example/src/feature/collection/data/provider/remote/collection_network_data_provider_impl.dart';
 import 'package:shopify_example/src/feature/collection/data/repository/collection_repository_impl.dart';
 import 'package:shopify_example/src/feature/collections/data/provider/remote/collections_network_data_provider_impl.dart';
@@ -53,11 +55,24 @@ mixin InitializationSteps {
       progress.dependencies.collectionsRepository = collectionsRepository;
     },
     'Collection Repository': (progress) async {
+      final shopifyGraphQLClient = ShopifyGraphQLClient(
+          graphQLClient: progress.dependencies.graphQLClient);
       final collectionNetworkDataSource = CollectionNetworkDataProviderImpl(
-          shopifyGraphQLClient: progress.dependencies.graphQLClient);
+          shopifyGraphQLClient: shopifyGraphQLClient);
       final collectionRepository = CollectionRepositoryImpl(
           collectionNetworkDataProvider: collectionNetworkDataSource);
       progress.dependencies.collectionRepository = collectionRepository;
+    },
+    'Authentication Repository': (progress) async {
+      final shopifyGraphQLClient = ShopifyGraphQLClient(
+          graphQLClient: progress.dependencies.graphQLClient);
+      final authenticationNetworkDataSource = AuthenticationNetworkDataSourceImpl(
+        shopifyGraphQLClient: shopifyGraphQLClient,
+      );
+      final authenticationRepository = AuthenticationRepositoryImpl(
+        networkDataSource: authenticationNetworkDataSource,
+      );
+      progress.dependencies.authenticationRepository = authenticationRepository;
     },
   };
 }

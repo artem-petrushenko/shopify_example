@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shopify_example/src/common/routes/app_router.dart';
+import 'package:shopify_example/src/common/routes/router.dart';
 import 'package:shopify_example/src/common/theme/app_theme.dart';
 import 'package:shopify_example/src/common/theme/colored_palette/dark_colored_palette.dart';
 import 'package:shopify_example/src/common/theme/colored_palette/light_colored_palette.dart';
@@ -15,7 +15,7 @@ class MaterialContext extends StatelessWidget {
   const MaterialContext({super.key});
 
   @override
-  Widget build(BuildContext context) => MaterialApp(
+  Widget build(BuildContext context) => MaterialApp.router(
         title: 'Shopify',
         themeMode: ThemeMode.dark,
         theme: createTheme(LightColoredPalette()),
@@ -23,7 +23,6 @@ class MaterialContext extends StatelessWidget {
         // locale: Locale(localizationUnicode, ''),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        initialRoute: AppRouter.initialRoute,
-        onGenerateRoute: AppRouter.onGenerateRoute,
+        routerConfig: router,
       );
 }

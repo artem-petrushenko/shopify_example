@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:shopify_example/src/common/routes/routes.dart';
 import 'package:shopify_example/src/feature/collections/bloc/fetch_collections/fetch_collections_bloc.dart';
 import 'package:shopify_example/src/feature/collections/widget/collection_list_builder.dart';
 import 'package:shopify_example/src/feature/initialization/widget/dependency_scope.dart';
@@ -11,6 +13,15 @@ class CollectionListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          title: const Text('Collections'),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.person_2_outlined),
+              onPressed: () => context.push(Routes.login),
+            ),
+          ],
+        ),
         body: BlocProvider(
           create: (_) => FetchCollectionsBloc(
             collectionsRepository:

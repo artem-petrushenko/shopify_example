@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shopify_example/src/common/routes/app_router.dart';
+import 'package:go_router/go_router.dart';
+import 'package:shopify_example/src/common/routes/routes.dart';
 import 'package:shopify_example/src/feature/collections/model/collection_model.dart';
 import 'package:shopify_example/src/feature/collections/widget/collection_card.dart';
 
@@ -16,9 +17,9 @@ class CollectionListBuilder extends StatelessWidget {
         itemCount: collections.length,
         itemBuilder: (BuildContext context, int index) => CollectionCard(
           title: collections[index].title,
-          onTap: () => Navigator.of(context).pushNamed(
-            AppRouter.collection,
-            arguments: collections[index].id,
+          onTap: () => context.push(
+            Routes.collection,
+            extra: collections[index].id,
           ),
         ),
       );

@@ -1,5 +1,5 @@
 import 'package:shopify_example/src/core/components/graphql_client/graph_ql_client.dart';
-import 'package:shopify_example/src/core/components/graphql_client/query/get_collections.dart';
+import 'package:shopify_example/src/core/components/graphql_client/query/query/get_collections.dart';
 import 'package:shopify_example/src/feature/collections/data/provider/remote/collections_network_data_provider.dart';
 import 'package:shopify_example/src/feature/collections/model/collection_model.dart';
 import 'package:shopify_example/src/feature/collections/model/collections_response_model.dart';
