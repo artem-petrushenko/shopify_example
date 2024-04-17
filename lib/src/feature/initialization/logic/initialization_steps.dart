@@ -1,8 +1,11 @@
 import 'dart:async';
 
 import 'package:graphql/client.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shopify_example/src/core/components/graphql_client/graph_ql_client.dart';
 import 'package:shopify_example/src/core/components/graphql_client/graph_ql_endpoint.dart';
+import 'package:shopify_example/src/core/components/shared_preferences/shared_preferences_dao.dart';
+import 'package:shopify_example/src/feature/auth/data/provider/local/session_storage_impl.dart';
 import 'package:shopify_example/src/feature/auth/data/provider/remote/authentication_network_data_source_impl.dart';
 import 'package:shopify_example/src/feature/auth/data/repository/authentication_repository_impl.dart';
 import 'package:shopify_example/src/feature/collection/data/provider/remote/collection_network_data_provider_impl.dart';
@@ -25,7 +28,7 @@ mixin InitializationSteps {
   /// which are executed in the order they are defined.
   final initializationSteps = <String, StepAction>{
     'Global Dependencies': (progress) async {
-      progress.dependencies.graphQLClient = GraphQLClient(
+      final graphQLClient = GraphQLClient(
         cache: GraphQLCache(),
         link: HttpLink(
           GraphQLEndpoint.baseUrl,
@@ -35,42 +38,43 @@ mixin InitializationSteps {
           },
         ),
       );
+      progress.dependencies.graphQLClient = ShopifyGraphQLClient(
+        graphQLClient: graphQLClient,
+      );
+      final sharedPreferences = await SharedPreferences.getInstance();
+      progress.dependencies.preferencesDao =
+          SharedPreferencesDao(sharedPreferences: sharedPreferences);
     },
     'Products Repository': (progress) async {
-      final shopifyGraphQLClient = ShopifyGraphQLClient(
-          graphQLClient: progress.dependencies.graphQLClient);
       final productsNetworkDataSource = ProductsNetworkDataProviderImpl(
-          shopifyGraphQLClient: shopifyGraphQLClient);
+          shopifyGraphQLClient: progress.dependencies.graphQLClient);
       final productsRepository = ProductsRepositoryImpl(
           productsNetworkDataProvider: productsNetworkDataSource);
       progress.dependencies.productsRepository = productsRepository;
     },
     'Collections Repository': (progress) async {
-      final shopifyGraphQLClient = ShopifyGraphQLClient(
-          graphQLClient: progress.dependencies.graphQLClient);
       final collectionsNetworkDataSource = CollectionsNetworkDataProviderImpl(
-          shopifyGraphQLClient: shopifyGraphQLClient);
+          shopifyGraphQLClient: progress.dependencies.graphQLClient);
       final collectionsRepository = CollectionsRepositoryImpl(
           collectionsNetworkDataProvider: collectionsNetworkDataSource);
       progress.dependencies.collectionsRepository = collectionsRepository;
     },
     'Collection Repository': (progress) async {
-      final shopifyGraphQLClient = ShopifyGraphQLClient(
-          graphQLClient: progress.dependencies.graphQLClient);
       final collectionNetworkDataSource = CollectionNetworkDataProviderImpl(
-          shopifyGraphQLClient: shopifyGraphQLClient);
+          shopifyGraphQLClient: progress.dependencies.graphQLClient);
       final collectionRepository = CollectionRepositoryImpl(
           collectionNetworkDataProvider: collectionNetworkDataSource);
       progress.dependencies.collectionRepository = collectionRepository;
     },
     'Authentication Repository': (progress) async {
-      final shopifyGraphQLClient = ShopifyGraphQLClient(
-          graphQLClient: progress.dependencies.graphQLClient);
-      final authenticationNetworkDataSource = AuthenticationNetworkDataSourceImpl(
-        shopifyGraphQLClient: shopifyGraphQLClient,
+      final authenticationNetworkDataSource =
+          AuthenticationNetworkDataSourceImpl(
+        shopifyGraphQLClient: progress.dependencies.graphQLClient,
       );
       final authenticationRepository = AuthenticationRepositoryImpl(
         networkDataSource: authenticationNetworkDataSource,
+        sessionStorage: SessionStorageImpl(
+            sharedPreferences: progress.dependencies.preferencesDao),
       );
       progress.dependencies.authenticationRepository = authenticationRepository;
     },

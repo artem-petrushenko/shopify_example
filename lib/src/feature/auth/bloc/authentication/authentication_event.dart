@@ -6,4 +6,6 @@ class AuthenticationEvent with _$AuthenticationEvent {
     required final String email,
     required final String password,
   }) = _SignInWithEmailAndPassword;
+
+  const factory AuthenticationEvent.logOut() = _LogOut;
 }

@@ -19,6 +19,7 @@ class AuthenticationBloc
       (event, emit) => event.map(
         signInWithEmailAndPassword: (event) =>
             _onSignInWithEmailAndPassword(event, emit),
+        logOut: (event) => _onLogOut(event, emit),
       ),
     );
   }
@@ -43,6 +44,26 @@ class AuthenticationBloc
         password: event.password,
       );
       emit(_Success(customer: customer));
+    } on Object catch (error) {
+      emit(_Failure(message: error.toString()));
+    } finally {
+      emit(
+        state.customer.when<AuthenticationState>(
+          authenticated: (customer) => _Authenticated(customer: customer),
+          notAuthenticated: () => const _NotAuthenticated(),
+        ),
+      );
+    }
+  }
+
+  Future<void> _onLogOut(
+    _LogOut event,
+    Emitter<AuthenticationState> emit,
+  ) async {
+    try {
+      emit(const _Loading());
+      await _authenticationRepository.logOut();
+      emit(const _Success());
     } on Object catch (error) {
       emit(_Failure(message: error.toString()));
     } finally {

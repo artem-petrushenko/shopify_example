@@ -1,5 +1,6 @@
 import 'package:shopify_example/src/core/components/graphql_client/graph_ql_client.dart';
 import 'package:shopify_example/src/core/components/graphql_client/query/mutation/customer_access_token_create.dart';
+import 'package:shopify_example/src/core/components/graphql_client/query/mutation/customer_access_token_delete.dart';
 import 'package:shopify_example/src/core/components/graphql_client/query/query/get_customer.dart';
 import 'package:shopify_example/src/feature/auth/data/provider/remote/authentication_network_data_source.dart';
 import 'package:shopify_example/src/feature/auth/model/customer_access_token_model.dart';
@@ -14,24 +15,24 @@ final class AuthenticationNetworkDataSourceImpl
   final ShopifyGraphQLClient _shopifyGraphQLClient;
 
   @override
-  Future<CustomerModel> signInWithEmailAndPassword({
-    required final String email,
-    required final String password,
+  Future<CustomerModel> signInWithAccessToken({
+    required final CustomerAccessTokenModel customerAccessToken,
   }) async {
-    final customerAccessToken = await _createAccessToken(email, password);
     final response = await _shopifyGraphQLClient.query(
       document: getCustomerQuery,
       variables: {
         'customerAccessToken': customerAccessToken.accessToken,
       },
     );
-    return AuthenticatedCustomerModel.fromJson(response.data?['customer'] ?? {});
+    return AuthenticatedCustomerModel.fromJson(
+        response.data?['customer'] ?? {});
   }
 
-  Future<CustomerAccessTokenModel> _createAccessToken(
-    String email,
-    String password,
-  ) async {
+  @override
+  Future<CustomerAccessTokenModel> createAccessToken({
+    required final String email,
+    required final String password,
+  }) async {
     final response = await _shopifyGraphQLClient.mutate(
       document: customerAccessTokenCreateMutation,
       variables: {
@@ -40,6 +41,16 @@ final class AuthenticationNetworkDataSourceImpl
       },
     );
     return _extractAccessToken(response.data, "customerAccessTokenCreate");
+  }
+
+  @override
+  Future<void> logOut({
+    required final String customerAccessToken,
+  }) async {
+    await _shopifyGraphQLClient
+        .mutate(document: customerAccessTokenDeleteMutation, variables: {
+      'customerAccessToken': customerAccessToken,
+    });
   }
 
   CustomerAccessTokenModel _extractAccessToken(

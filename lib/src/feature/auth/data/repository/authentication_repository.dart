@@ -5,4 +5,6 @@ abstract interface class AuthenticationRepository {
     required final String email,
     required final String password,
   });
+
+  Future<void> logOut();
 }

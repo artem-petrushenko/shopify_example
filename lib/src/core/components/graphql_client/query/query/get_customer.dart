@@ -1,12 +1,17 @@
 const String getCustomerQuery = '''
   query(\$customerAccessToken: String!){
     customer(customerAccessToken: \$customerAccessToken) {
-      id
+      acceptsMarketing
       createdAt
-      email
       displayName
+      email
       firstName
+      id
       lastName
+      numberOfOrders
+      phone
+      tags
+      updatedAt
     }
   }
 ''';

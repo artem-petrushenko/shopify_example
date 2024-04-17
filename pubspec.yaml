@@ -34,6 +34,7 @@ dependencies:
   equatable: ^2.0.5
   dev: ^1.0.0
   go_router_builder: ^2.5.1
+  shared_preferences: ^2.2.3
 
 dev_dependencies:
   flutter_test:

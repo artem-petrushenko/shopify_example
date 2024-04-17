@@ -1,4 +1,5 @@
-import 'package:graphql/client.dart';
+import 'package:shopify_example/src/core/components/graphql_client/graph_ql_client.dart';
+import 'package:shopify_example/src/core/components/shared_preferences/shared_preferences_dao.dart';
 import 'package:shopify_example/src/feature/auth/data/repository/authentication_repository.dart';
 import 'package:shopify_example/src/feature/collection/data/repository/collection_repository.dart';
 import 'package:shopify_example/src/feature/collections/data/repository/collections_repository.dart';
@@ -11,11 +12,12 @@ base class Dependencies {
   /// {@macro dependencies}
   Dependencies();
 
-  late final GraphQLClient graphQLClient;
+  late final ShopifyGraphQLClient graphQLClient;
   late final ProductsRepository productsRepository;
   late final CollectionsRepository collectionsRepository;
   late final CollectionRepository collectionRepository;
   late final AuthenticationRepository authenticationRepository;
+  late final SharedPreferencesDao preferencesDao;
 }
 
 /// {@template initialization_result}

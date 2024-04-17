@@ -18,4 +18,6 @@ class CustomerAccessTokenModel extends Equatable {
 
   factory CustomerAccessTokenModel.fromJson(Map<String, dynamic> json) =>
       _$CustomerAccessTokenModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CustomerAccessTokenModelToJson(this);
 }

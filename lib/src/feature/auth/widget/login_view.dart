@@ -16,8 +16,8 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   void initState() {
-    _emailController = TextEditingController()..text = 'petrushenkoartemw@gmail.com';
-    _passwordController = TextEditingController()..text = 'StayDown72';
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
     super.initState();
   }
 
@@ -67,6 +67,14 @@ class _LoginViewState extends State<LoginView> {
                             ),
                           ),
                       child: const Text('Login'),
+                    ),
+                  ),
+                  BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                    builder: (context, state) => ElevatedButton(
+                      onPressed: () => context.read<AuthenticationBloc>().add(
+                            const AuthenticationEvent.logOut(),
+                          ),
+                      child: const Text('Logout'),
                     ),
                   ),
                   BlocBuilder<AuthenticationBloc, AuthenticationState>(
