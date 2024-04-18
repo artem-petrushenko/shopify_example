@@ -6,18 +6,31 @@ class CartItemCard extends StatelessWidget {
     required this.itemName,
     required this.itemPrice,
     required this.itemQuantity,
+    required this.onDeletePressed,
   });
 
   final String itemName;
   final String itemPrice;
   final int itemQuantity;
+  final VoidCallback onDeletePressed;
 
   @override
-  Widget build(BuildContext context) => Column(
+  Widget build(BuildContext context) => Row(
         children: [
-          Text(itemName),
-          Text(itemPrice),
-          Text(itemQuantity.toString()),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(itemName),
+                Text(itemPrice),
+                Text(itemQuantity.toString()),
+              ],
+            ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.delete),
+            onPressed: onDeletePressed,
+          ),
         ],
       );
 }

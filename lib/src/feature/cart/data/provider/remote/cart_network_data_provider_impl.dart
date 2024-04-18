@@ -1,6 +1,7 @@
 import 'package:shopify_example/src/core/components/graphql_client/graph_ql_client.dart';
 import 'package:shopify_example/src/core/components/graphql_client/query/mutation/cart_create.dart';
 import 'package:shopify_example/src/core/components/graphql_client/query/mutation/cart_lines_add.dart';
+import 'package:shopify_example/src/core/components/graphql_client/query/mutation/cart_lines_remote.dart';
 import 'package:shopify_example/src/core/components/graphql_client/query/query/get_cart_items.dart';
 import 'package:shopify_example/src/feature/cart/data/provider/remote/cart_network_data_provider.dart';
 import 'package:shopify_example/src/feature/cart/model/cart_items_response_model.dart';
@@ -26,16 +27,28 @@ class CartNetworkDataProviderImpl implements CartNetworkDataProvider {
     required final String cartId,
     required final String productId,
     required final int quantity,
-  }) async {
-    await _shopifyGraphQLClient.mutate(
-      document: cartLinesAddMutation,
-      variables: {
-        'cartId': cartId,
-        'productId': productId,
-        'quantity': quantity,
-      },
-    );
-  }
+  }) async =>
+      await _shopifyGraphQLClient.mutate(
+        document: cartLinesAddMutation,
+        variables: {
+          'cartId': cartId,
+          'merchandiseId': productId,
+          'quantity': quantity,
+        },
+      );
+
+  @override
+  Future<void> removeProductFromCart({
+    required final List<String> linesIds,
+    required final String cartId,
+  }) async =>
+      await _shopifyGraphQLClient.mutate(
+        document: cartLinesRemoteMutation,
+        variables: {
+          'cartId': cartId,
+          'linesIds': linesIds,
+        },
+      );
 
   @override
   Future<CartItemsResponseModel> fetchCartItems({

@@ -13,8 +13,7 @@ part 'cart_items_state.dart';
 part 'cart_items_bloc.freezed.dart';
 
 class CartItemsBloc extends Bloc<CartItemsEvent, CartItemsState> {
-  CartItemsBloc(
-    this.cartId, {
+  CartItemsBloc({
     required final CartRepository cartRepository,
   })  : _cartRepository = cartRepository,
         super(const _Initial()) {
@@ -25,10 +24,9 @@ class CartItemsBloc extends Bloc<CartItemsEvent, CartItemsState> {
     );
   }
 
-  final String cartId;
   final CartRepository _cartRepository;
 
-  List<CartItemModel> get items => state.maybeMap(
+  List<CartItemModel> get _items => state.maybeMap(
         success: (state) => state.items,
         loading: (state) => state.oldItems,
         failure: (state) => state.oldItems,
@@ -44,8 +42,8 @@ class CartItemsBloc extends Bloc<CartItemsEvent, CartItemsState> {
       return;
     }
     try {
-      emit(const _Loading());
-      final cart = await _cartRepository.fetchCartItems(cartId: cartId);
+      emit(_Loading(oldItems: _items));
+      final cart = await _cartRepository.fetchCartItems();
       if (cart.items.cartItems.isEmpty) {
         emit(const _Empty());
       } else {
@@ -57,7 +55,10 @@ class CartItemsBloc extends Bloc<CartItemsEvent, CartItemsState> {
         error: error,
         stackTrace: stackTrace,
       );
-      emit(const _Failure(message: 'Failed to fetch cart items'));
+      emit(_Failure(
+        message: 'Failed to fetch cart items',
+        oldItems: _items,
+      ));
     } finally {
       event.completer?.complete();
     }

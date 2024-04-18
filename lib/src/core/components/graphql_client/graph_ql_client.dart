@@ -11,11 +11,13 @@ class ShopifyGraphQLClient {
   Future<QueryResult> query({
     required final String document,
     final Map<String, dynamic> variables = const {},
+    final FetchPolicy fetchPolicy = FetchPolicy.noCache,
   }) async =>
       await _graphQLClient.query(
         QueryOptions(
           document: gql(document),
           variables: variables,
+          fetchPolicy: fetchPolicy,
         ),
       );
 

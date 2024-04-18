@@ -8,15 +8,12 @@ import 'package:shopify_example/src/feature/initialization/widget/dependency_sco
 class CartItemList extends StatelessWidget {
   const CartItemList({
     super.key,
-    required this.cartId,
   });
 
-  final String cartId;
 
   @override
   Widget build(BuildContext context) => BlocProvider(
         create: (BuildContext context) => CartItemsBloc(
-          cartId,
           cartRepository: DependenciesScope.of(context).cartRepository,
         )..add(const CartItemsEvent.fetchItems()),
         child: BlocBuilder<CartItemsBloc, CartItemsState>(

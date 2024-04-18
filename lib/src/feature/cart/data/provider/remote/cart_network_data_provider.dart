@@ -10,6 +10,11 @@ abstract interface class CartNetworkDataProvider {
     required final int quantity,
   });
 
+  Future<void> removeProductFromCart({
+    required final List<String> linesIds,
+    required final String cartId,
+  });
+
   Future<CartItemsResponseModel> fetchCartItems({
     required final String cartId,
     final int first = 8,

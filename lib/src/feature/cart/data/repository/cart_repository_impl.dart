@@ -13,8 +13,7 @@ class CartRepositoryImpl implements CartRepository {
   final CartNetworkDataProvider _cartNetworkDataProvider;
   final CartStorage _cartStorage;
 
-  @override
-  Future<String> fetchCartId() async {
+  Future<String> _fetchCartId() async {
     final cartId = _cartStorage.getCartId();
     if (cartId == null || cartId.isEmpty) {
       final cart = await _cartNetworkDataProvider.createCart();
@@ -26,23 +25,36 @@ class CartRepositoryImpl implements CartRepository {
 
   @override
   Future<void> addProductToCart({
-    required final String cartId,
     required final String productId,
     required final int quantity,
-  }) async =>
-      await _cartNetworkDataProvider.addProductToCart(
-        cartId: cartId,
-        productId: productId,
-        quantity: quantity,
-      );
+  }) async {
+    final cartId = await _fetchCartId();
+    await _cartNetworkDataProvider.addProductToCart(
+      cartId: cartId,
+      productId: productId,
+      quantity: quantity,
+    );
+  }
+
+  @override
+  Future<void> removeProductFromCart({
+    required final List<String> linesIds,
+  }) async {
+    final cartId = await _fetchCartId();
+    await _cartNetworkDataProvider.removeProductFromCart(
+      linesIds: linesIds,
+      cartId: cartId,
+    );
+  }
 
   @override
   Future<CartItemsResponseModel> fetchCartItems({
-    required final String cartId,
     final int first = 8,
-  }) async =>
-      await _cartNetworkDataProvider.fetchCartItems(
-        cartId: cartId,
-        first: first,
-      );
+  }) async {
+    final cartId = await _fetchCartId();
+    return await _cartNetworkDataProvider.fetchCartItems(
+      cartId: cartId,
+      first: first,
+    );
+  }
 }
