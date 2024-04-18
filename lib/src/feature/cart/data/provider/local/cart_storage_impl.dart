@@ -7,4 +7,11 @@ class CartStorageImpl implements CartStorage {
   }) : _sharedPreferencesDao = sharedPreferencesDao;
 
   final SharedPreferencesDao _sharedPreferencesDao;
+
+  @override
+  Future<void> addCartId(String cardId) async =>
+      await _sharedPreferencesDao.updateString('cardId', cardId);
+
+  @override
+  String? getCartId() => _sharedPreferencesDao.readString('cardId');
 }

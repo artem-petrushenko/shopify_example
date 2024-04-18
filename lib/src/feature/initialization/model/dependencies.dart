@@ -1,6 +1,7 @@
 import 'package:shopify_example/src/core/components/graphql_client/graph_ql_client.dart';
 import 'package:shopify_example/src/core/components/shared_preferences/shared_preferences_dao.dart';
 import 'package:shopify_example/src/feature/auth/data/repository/authentication_repository.dart';
+import 'package:shopify_example/src/feature/cart/data/repository/cart_repository.dart';
 import 'package:shopify_example/src/feature/collection/data/repository/collection_repository.dart';
 import 'package:shopify_example/src/feature/collections/data/repository/collections_repository.dart';
 import 'package:shopify_example/src/feature/product_details/data/repository/products_repository.dart';
@@ -18,6 +19,7 @@ base class Dependencies {
   late final CollectionRepository collectionRepository;
   late final AuthenticationRepository authenticationRepository;
   late final SharedPreferencesDao preferencesDao;
+  late final CartRepository cartRepository;
 }
 
 /// {@template initialization_result}

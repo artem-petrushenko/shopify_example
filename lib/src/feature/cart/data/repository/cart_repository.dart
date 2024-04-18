@@ -1,8 +1,7 @@
 import 'package:shopify_example/src/feature/cart/model/cart_items_response_model.dart';
-import 'package:shopify_example/src/feature/cart/model/create_cart_model.dart';
 
-abstract interface class CartNetworkDataProvider {
-  Future<CreateCartModel> createCart();
+abstract interface class CartRepository {
+  Future<String> fetchCartId();
 
   Future<void> addProductToCart({
     required final String cartId,

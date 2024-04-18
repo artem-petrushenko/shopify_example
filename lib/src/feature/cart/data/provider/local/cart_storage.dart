@@ -1,1 +1,5 @@
-abstract interface class CartStorage {}
+abstract interface class CartStorage {
+  Future<void> addCartId(String cardId);
+
+  String? getCartId();
+}

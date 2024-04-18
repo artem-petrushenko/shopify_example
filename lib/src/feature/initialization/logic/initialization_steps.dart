@@ -8,6 +8,9 @@ import 'package:shopify_example/src/core/components/shared_preferences/shared_pr
 import 'package:shopify_example/src/feature/auth/data/provider/local/session_storage_impl.dart';
 import 'package:shopify_example/src/feature/auth/data/provider/remote/authentication_network_data_source_impl.dart';
 import 'package:shopify_example/src/feature/auth/data/repository/authentication_repository_impl.dart';
+import 'package:shopify_example/src/feature/cart/data/provider/local/cart_storage_impl.dart';
+import 'package:shopify_example/src/feature/cart/data/provider/remote/cart_network_data_provider_impl.dart';
+import 'package:shopify_example/src/feature/cart/data/repository/cart_repository_impl.dart';
 import 'package:shopify_example/src/feature/collection/data/provider/remote/collection_network_data_provider_impl.dart';
 import 'package:shopify_example/src/feature/collection/data/repository/collection_repository_impl.dart';
 import 'package:shopify_example/src/feature/collections/data/provider/remote/collections_network_data_provider_impl.dart';
@@ -74,9 +77,22 @@ mixin InitializationSteps {
       final authenticationRepository = AuthenticationRepositoryImpl(
         networkDataSource: authenticationNetworkDataSource,
         sessionStorage: SessionStorageImpl(
-            sharedPreferences: progress.dependencies.preferencesDao),
+          sharedPreferences: progress.dependencies.preferencesDao,
+        ),
       );
       progress.dependencies.authenticationRepository = authenticationRepository;
+    },
+    'Cart Repository': (progress) async {
+      final cartNetworkDataSource = CartNetworkDataProviderImpl(
+          shopifyGraphQLClient: progress.dependencies.graphQLClient);
+      final cartStorage = CartStorageImpl(
+        sharedPreferencesDao: progress.dependencies.preferencesDao,
+      );
+      final cartRepository = CartRepositoryImpl(
+        cartNetworkDataProvider: cartNetworkDataSource,
+        cartStorage: cartStorage,
+      );
+      progress.dependencies.cartRepository = cartRepository;
     },
   };
 }
