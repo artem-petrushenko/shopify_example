@@ -50,7 +50,7 @@ class ProductsNetworkDataProviderImpl implements ProductsNetworkDataProvider {
     final response = await _shopifyGraphQLClient.query(
       document: getProductRecommendationsQuery,
       variables: {
-        'id': id,
+        'productId': id,
       },
     );
     return ProductRecommendationsResponseModel.fromJson(response.data ?? {});

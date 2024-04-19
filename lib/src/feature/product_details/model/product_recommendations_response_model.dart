@@ -7,15 +7,15 @@ part 'product_recommendations_response_model.g.dart';
 @JsonSerializable()
 class ProductRecommendationsResponseModel extends Equatable {
   const ProductRecommendationsResponseModel({
-    required this.productsRecommendations,
+    required this.productRecommendations,
   });
 
-  final List<ProductModel> productsRecommendations;
+  final List<ProductModel> productRecommendations;
 
   factory ProductRecommendationsResponseModel.fromJson(
           Map<String, dynamic> json) =>
       _$ProductRecommendationsResponseModelFromJson(json);
 
   @override
-  List<Object?> get props => [productsRecommendations];
+  List<Object?> get props => [productRecommendations];
 }

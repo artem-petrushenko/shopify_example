@@ -44,7 +44,7 @@ class FetchProductRecommendationsBloc extends Bloc<
     try {
       emit(const _Loading());
       final products = await _productsRepository.getRecommendations(id: _id);
-      emit(_Success(products: products.productsRecommendations));
+      emit(_Success(products: products.productRecommendations));
     } on Object catch (error, stackTrace) {
       logger.error(
         'Failed to fetch product recommendations',

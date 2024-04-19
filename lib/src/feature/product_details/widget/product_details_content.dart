@@ -6,6 +6,7 @@ import 'package:shopify_example/src/feature/product_details/bloc/selecter_produc
 import 'package:shopify_example/src/feature/product_details/model/product_details_model.dart';
 import 'package:shopify_example/src/feature/product_details/widget/add_to_cart_product_button.dart';
 import 'package:shopify_example/src/feature/product_details/widget/product_configuration_selector.dart';
+import 'package:shopify_example/src/feature/product_details/widget/product_recommendations_widget.dart';
 
 class ProductDetailsContent extends StatelessWidget {
   const ProductDetailsContent({
@@ -49,6 +50,11 @@ class ProductDetailsContent extends StatelessWidget {
                               '${productDetails.priceRange.minVariantPrice.amount} ${productDetails.priceRange.minVariantPrice.currencyCode}'),
                         ),
                       ],
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: ProductRecommendationsWidget(
+                      productId: productDetails.id,
                     ),
                   ),
                   SliverToBoxAdapter(
