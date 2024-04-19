@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shopify_example/src/common/scaffold/scaffold_with_nav_bar.dart';
-import 'package:shopify_example/src/feature/auth/widget/login_view.dart';
+import 'package:shopify_example/src/common/view_selector/profile_view_selector.dart';
 import 'package:shopify_example/src/feature/cart/widget/cart_view.dart';
 import 'package:shopify_example/src/feature/collection/widget/collection_details_view.dart';
 import 'package:shopify_example/src/feature/collections/widget/collections_view.dart';
@@ -13,8 +13,8 @@ class Routes {
   static const collections = '/collections';
   static const collection = '/collection';
   static const productDetails = '/productDetails';
-  static const login = '/login';
   static const cart = '/cart';
+  static const profile = '/profile';
 }
 
 class BranchShopData extends StatefulShellBranchData {
@@ -38,7 +38,7 @@ class BranchCartData extends StatefulShellBranchData {
     ),
     TypedStatefulShellBranch<BranchPersonAccountData>(
       routes: <TypedRoute<RouteData>>[
-        TypedGoRoute<LoginRoute>(path: Routes.login),
+        TypedGoRoute<ProfileRoute>(path: Routes.profile),
       ],
     ),
     TypedStatefulShellBranch<BranchCartData>(
@@ -52,11 +52,9 @@ class BottomNavigationShellRoute extends StatefulShellRouteData {
   const BottomNavigationShellRoute();
 
   @override
-  Widget builder(
-    BuildContext context,
-    GoRouterState state,
-    StatefulNavigationShell navigationShell,
-  ) =>
+  Widget builder(BuildContext context,
+      GoRouterState state,
+      StatefulNavigationShell navigationShell,) =>
       ScaffoldWithNavBar(navigationShell: navigationShell);
 }
 
@@ -91,18 +89,18 @@ class ProductDetailsRoute extends GoRouteData {
       ProductDetailsView(id: $extra);
 }
 
-@TypedGoRoute<LoginRoute>(path: Routes.login)
-class LoginRoute extends GoRouteData {
-  const LoginRoute();
-
-  @override
-  Widget build(BuildContext context, GoRouterState state) => const LoginView();
-}
-
 @TypedGoRoute<CartRoute>(path: Routes.cart)
 class CartRoute extends GoRouteData {
   const CartRoute();
 
   @override
   Widget build(BuildContext context, GoRouterState state) => const CartView();
+}
+
+@TypedGoRoute<ProfileRoute>(path: Routes.profile)
+class ProfileRoute extends GoRouteData {
+  const ProfileRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => const ProfileViewSelector();
 }

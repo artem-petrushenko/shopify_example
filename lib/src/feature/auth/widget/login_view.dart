@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopify_example/src/feature/auth/bloc/authentication/authentication_bloc.dart';
-import 'package:shopify_example/src/feature/initialization/widget/dependency_scope.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -29,65 +28,60 @@ class _LoginViewState extends State<LoginView> {
   }
 
   @override
-  Widget build(BuildContext context) => BlocProvider<AuthenticationBloc>(
-        create: (BuildContext context) => AuthenticationBloc(
-            authenticationRepository:
-                DependenciesScope.of(context).authenticationRepository),
-        child: BlocListener<AuthenticationBloc, AuthenticationState>(
-          listenWhen: (previous, current) => current.maybeMap(
-            failure: (_) => true,
-            orElse: () => false,
+  Widget build(BuildContext context) =>
+      BlocListener<AuthenticationBloc, AuthenticationState>(
+        listenWhen: (previous, current) => current.maybeMap(
+          failure: (_) => true,
+          orElse: () => false,
+        ),
+        listener: (context, state) => state.mapOrNull(
+          failure: (state) => ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.message)),
           ),
-          listener: (context, state) => state.mapOrNull(
-            failure: (state) => ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message)),
-            ),
+        ),
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text('Login'),
           ),
-          child: Scaffold(
-            appBar: AppBar(
-              title: const Text('Login'),
-            ),
-            body: Center(
-              child: Column(
-                children: [
-                  TextFormField(
-                    decoration: InputDecoration(labelText: 'Email'),
-                    controller: _emailController,
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(labelText: 'Password'),
-                    controller: _passwordController,
-                  ),
-                  BlocBuilder<AuthenticationBloc, AuthenticationState>(
-                    builder: (context, state) => ElevatedButton(
-                      onPressed: () => context.read<AuthenticationBloc>().add(
-                            AuthenticationEvent.signInWithEmailAndPassword(
-                              email: _emailController.text,
-                              password: _passwordController.text,
-                            ),
+          body: Center(
+            child: Column(
+              children: [
+                TextFormField(
+                  decoration: InputDecoration(labelText: 'Email'),
+                  controller: _emailController,
+                ),
+                TextFormField(
+                  decoration: InputDecoration(labelText: 'Password'),
+                  controller: _passwordController,
+                ),
+                BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                  builder: (context, state) => ElevatedButton(
+                    onPressed: () => context.read<AuthenticationBloc>().add(
+                          AuthenticationEvent.signInWithEmailAndPassword(
+                            email: _emailController.text,
+                            password: _passwordController.text,
                           ),
-                      child: const Text('Login'),
-                    ),
+                        ),
+                    child: const Text('Login'),
                   ),
-                  BlocBuilder<AuthenticationBloc, AuthenticationState>(
-                    builder: (context, state) => ElevatedButton(
-                      onPressed: () => context.read<AuthenticationBloc>().add(
-                            const AuthenticationEvent.logOut(),
-                          ),
-                      child: const Text('Logout'),
-                    ),
+                ),
+                BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                  builder: (context, state) => ElevatedButton(
+                    onPressed: () => context.read<AuthenticationBloc>().add(
+                          const AuthenticationEvent.logOut(),
+                        ),
+                    child: const Text('Logout'),
                   ),
-                  BlocBuilder<AuthenticationBloc, AuthenticationState>(
-                    builder:
-                        (BuildContext context, AuthenticationState state) =>
-                            state.maybeMap(
-                      orElse: () => Text('Empty'),
-                      authenticated: (state) => Text('Authenticated'),
-                      notAuthenticated: (state) => Text('Unauthenticated'),
-                    ),
-                  )
-                ],
-              ),
+                ),
+                BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                  builder: (BuildContext context, AuthenticationState state) =>
+                      state.maybeMap(
+                    orElse: () => Text('Empty'),
+                    authenticated: (state) => Text('Authenticated'),
+                    notAuthenticated: (state) => Text('Unauthenticated'),
+                  ),
+                )
+              ],
             ),
           ),
         ),
