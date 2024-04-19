@@ -13,4 +13,9 @@ abstract interface class CartRepository {
   Future<CartItemsResponseModel> fetchCartItems({
     final int first = 8,
   });
+
+  Future<void> updateProductInCart({
+    required final String lineId,
+    required final int quantity,
+  });
 }

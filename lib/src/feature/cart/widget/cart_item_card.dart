@@ -7,12 +7,16 @@ class CartItemCard extends StatelessWidget {
     required this.itemPrice,
     required this.itemQuantity,
     required this.onDeletePressed,
+    required this.onMinusPressed,
+    required this.onPlusPressed,
   });
 
   final String itemName;
   final String itemPrice;
   final int itemQuantity;
   final VoidCallback onDeletePressed;
+  final VoidCallback onMinusPressed;
+  final VoidCallback onPlusPressed;
 
   @override
   Widget build(BuildContext context) => Row(
@@ -30,6 +34,14 @@ class CartItemCard extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.delete),
             onPressed: onDeletePressed,
+          ),
+          IconButton(
+            onPressed: onPlusPressed,
+            icon: const Icon(Icons.plus_one),
+          ),
+          IconButton(
+            onPressed: onMinusPressed,
+            icon: const Icon(Icons.exposure_minus_1),
           ),
         ],
       );

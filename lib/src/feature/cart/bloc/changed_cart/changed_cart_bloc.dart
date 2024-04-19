@@ -72,6 +72,27 @@ class ChangedCartBloc extends Bloc<ChangedCartEvent, ChangedCartState> {
     }
   }
 
-  _onUpdateItemInCart(
-      _UpdateItemInCart event, Emitter<ChangedCartState> emit) {}
+  Future<void> _onUpdateItemInCart(
+    _UpdateItemInCart event,
+    Emitter<ChangedCartState> emit,
+  ) async {
+    if (state is _Loading) return;
+    try {
+      emit(const _Loading());
+      await _cartRepository.updateProductInCart(
+        lineId: itemId,
+        quantity: event.quantity,
+      );
+      emit(const _Success());
+    } on Object catch (error, stackTrace) {
+      logger.error(
+        'Failed to update item in cart',
+        error: error,
+        stackTrace: stackTrace,
+      );
+      emit(const _Failure(message: 'Failed to update item in cart'));
+    } finally {
+      emit(const _Initial());
+    }
+  }
 }

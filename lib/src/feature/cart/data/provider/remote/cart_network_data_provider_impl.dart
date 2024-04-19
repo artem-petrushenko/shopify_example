@@ -2,6 +2,7 @@ import 'package:shopify_example/src/core/components/graphql_client/graph_ql_clie
 import 'package:shopify_example/src/core/components/graphql_client/query/mutation/cart_create.dart';
 import 'package:shopify_example/src/core/components/graphql_client/query/mutation/cart_lines_add.dart';
 import 'package:shopify_example/src/core/components/graphql_client/query/mutation/cart_lines_remote.dart';
+import 'package:shopify_example/src/core/components/graphql_client/query/mutation/cart_lines_update.dart';
 import 'package:shopify_example/src/core/components/graphql_client/query/query/get_cart_items.dart';
 import 'package:shopify_example/src/feature/cart/data/provider/remote/cart_network_data_provider.dart';
 import 'package:shopify_example/src/feature/cart/model/cart_items_response_model.dart';
@@ -64,4 +65,19 @@ class CartNetworkDataProviderImpl implements CartNetworkDataProvider {
     );
     return CartItemsResponseModel.fromJson(response.data?['cart'] ?? {});
   }
+
+  @override
+  Future<void> updateProductInCart({
+    required final String cartId,
+    required final String lineId,
+    required final int quantity,
+  }) async =>
+      await _shopifyGraphQLClient.mutate(
+        document: cartLinesUpdateMutation,
+        variables: {
+          'cartId': cartId,
+          'lineId': lineId,
+          'quantity': quantity,
+        },
+      );
 }

@@ -19,4 +19,10 @@ abstract interface class CartNetworkDataProvider {
     required final String cartId,
     final int first = 8,
   });
+
+  Future<void> updateProductInCart({
+    required final String cartId,
+    required final String lineId,
+    required final int quantity,
+  });
 }

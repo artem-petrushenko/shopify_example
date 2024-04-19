@@ -8,5 +8,7 @@ class ChangedCartEvent with _$ChangedCartEvent {
 
   const factory ChangedCartEvent.removeItemFromCart() = _RemoveItemFromCart;
 
-  const factory ChangedCartEvent.updateItemInCart() = _UpdateItemInCart;
+  const factory ChangedCartEvent.updateItemInCart({
+    required final int quantity,
+  }) = _UpdateItemInCart;
 }

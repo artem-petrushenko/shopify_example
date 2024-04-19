@@ -57,4 +57,17 @@ class CartRepositoryImpl implements CartRepository {
       first: first,
     );
   }
+
+  @override
+  Future<void> updateProductInCart({
+    required final String lineId,
+    required final int quantity,
+  }) async {
+    final cartId = await _fetchCartId();
+    await _cartNetworkDataProvider.updateProductInCart(
+      cartId: cartId,
+      lineId: lineId,
+      quantity: quantity,
+    );
+  }
 }

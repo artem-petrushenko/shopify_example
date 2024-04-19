@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shopify_example/src/feature/cart/bloc/cart_items/cart_items_bloc.dart';
 import 'package:shopify_example/src/feature/cart/bloc/changed_cart/changed_cart_bloc.dart';
 import 'package:shopify_example/src/feature/cart/model/cart_item_model.dart';
 import 'package:shopify_example/src/feature/cart/widget/cart_item_card.dart';
@@ -25,11 +24,11 @@ class CartItemsBuilder extends StatelessWidget {
             listener: (BuildContext context, ChangedCartState state) =>
                 state.mapOrNull(
               success: (state) => ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Item removed from cart')),
+                const SnackBar(
+                    content: Text('Item updated in cart successfully')),
               ),
               failure: (state) => ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                    content: Text('Failed to remove item from cart')),
+                const SnackBar(content: Text('Failed to update item in cart')),
               ),
             ),
             builder: (context, state) => CartItemCard(
@@ -39,6 +38,12 @@ class CartItemsBuilder extends StatelessWidget {
               onDeletePressed: () => context
                   .read<ChangedCartBloc>()
                   .add(const ChangedCartEvent.removeItemFromCart()),
+              onMinusPressed: () => context.read<ChangedCartBloc>().add(
+                  ChangedCartEvent.updateItemInCart(
+                      quantity: cartItems[index].quantity - 1)),
+              onPlusPressed: () => context.read<ChangedCartBloc>().add(
+                  ChangedCartEvent.updateItemInCart(
+                      quantity: cartItems[index].quantity + 1)),
             ),
           ),
         ),
