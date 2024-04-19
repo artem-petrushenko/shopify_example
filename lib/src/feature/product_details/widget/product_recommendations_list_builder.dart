@@ -25,6 +25,8 @@ class ProductRecommendationsListBuilder extends StatelessWidget {
               Routes.productDetails,
               extra: products[index].id,
             ),
+            // TODO: Replace with the actual merchandiseId
+            merchandiseId: 'gid://shopify/ProductVariant/43376658219184',
           ),
           itemCount: products.length,
         ),

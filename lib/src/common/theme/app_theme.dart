@@ -9,4 +9,6 @@ ThemeData createTheme(ColoredPalette palette) => ThemeData(
       extensions: const [
         ColorExtension(),
       ],
+      progressIndicatorTheme: const ProgressIndicatorThemeData(
+      ),
     );

@@ -46,8 +46,6 @@ class ChangedCartBloc extends Bloc<ChangedCartEvent, ChangedCartState> {
         stackTrace: stackTrace,
       );
       emit(const _Failure(message: 'Failed to add item to cart'));
-    } finally {
-      emit(const _Initial());
     }
   }
 
@@ -67,8 +65,6 @@ class ChangedCartBloc extends Bloc<ChangedCartEvent, ChangedCartState> {
         stackTrace: stackTrace,
       );
       emit(const _Failure(message: 'Failed to remove item from cart'));
-    } finally {
-      emit(const _Initial());
     }
   }
 
@@ -91,8 +87,6 @@ class ChangedCartBloc extends Bloc<ChangedCartEvent, ChangedCartState> {
         stackTrace: stackTrace,
       );
       emit(const _Failure(message: 'Failed to update item in cart'));
-    } finally {
-      emit(const _Initial());
     }
   }
 }
