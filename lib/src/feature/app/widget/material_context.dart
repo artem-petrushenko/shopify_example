@@ -22,7 +22,8 @@ class MaterialContext extends StatelessWidget {
         create: (BuildContext context) => AuthenticationBloc(
           authenticationRepository:
               DependenciesScope.of(context).authenticationRepository,
-        ),
+        )..add(const AuthenticationEvent.getSignedInCustomer()),
+        lazy: false,
         child: MaterialApp.router(
           title: 'Shopify',
           themeMode: ThemeMode.dark,

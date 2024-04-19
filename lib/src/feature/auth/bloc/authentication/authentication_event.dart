@@ -8,4 +8,6 @@ class AuthenticationEvent with _$AuthenticationEvent {
   }) = _SignInWithEmailAndPassword;
 
   const factory AuthenticationEvent.logOut() = _LogOut;
+
+  const factory AuthenticationEvent.getSignedInCustomer() = _GetSignedInCustomer;
 }

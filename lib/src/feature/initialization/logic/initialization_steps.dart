@@ -7,6 +7,7 @@ import 'package:shopify_example/src/core/components/graphql_client/graph_ql_endp
 import 'package:shopify_example/src/core/components/shared_preferences/shared_preferences_dao.dart';
 import 'package:shopify_example/src/feature/auth/data/provider/local/session_storage_impl.dart';
 import 'package:shopify_example/src/feature/auth/data/provider/remote/authentication_network_data_source_impl.dart';
+import 'package:shopify_example/src/feature/auth/data/provider/remote/customer_network_data_source_impl.dart';
 import 'package:shopify_example/src/feature/auth/data/repository/authentication_repository_impl.dart';
 import 'package:shopify_example/src/feature/cart/data/provider/local/cart_storage_impl.dart';
 import 'package:shopify_example/src/feature/cart/data/provider/remote/cart_network_data_provider_impl.dart';
@@ -74,8 +75,12 @@ mixin InitializationSteps {
           AuthenticationNetworkDataSourceImpl(
         shopifyGraphQLClient: progress.dependencies.graphQLClient,
       );
+      final customerNetworkDataSource = CustomerNetworkDataSourceImpl(
+        shopifyGraphQLClient: progress.dependencies.graphQLClient,
+      );
       final authenticationRepository = AuthenticationRepositoryImpl(
         networkDataSource: authenticationNetworkDataSource,
+        customerNetworkDataSource: customerNetworkDataSource,
         sessionStorage: SessionStorageImpl(
           sharedPreferences: progress.dependencies.preferencesDao,
         ),

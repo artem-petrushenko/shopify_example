@@ -20,6 +20,7 @@ class AuthenticationBloc
         signInWithEmailAndPassword: (event) =>
             _onSignInWithEmailAndPassword(event, emit),
         logOut: (event) => _onLogOut(event, emit),
+        getSignedInCustomer: (event) => _onGetSignedInCustomer(event, emit),
       ),
     );
   }
@@ -61,9 +62,31 @@ class AuthenticationBloc
     Emitter<AuthenticationState> emit,
   ) async {
     try {
-      emit(const _Loading());
+      emit(_Loading(customer: state.customer));
       await _authenticationRepository.logOut();
       emit(const _Success());
+    } on Object catch (error) {
+      emit(_Failure(message: error.toString()));
+    } finally {
+      emit(
+        state.customer.when<AuthenticationState>(
+          authenticated: (customer) => _Authenticated(customer: customer),
+          notAuthenticated: () => const _NotAuthenticated(),
+        ),
+      );
+    }
+  }
+
+  Future<void> _onGetSignedInCustomer(
+    _GetSignedInCustomer event,
+    Emitter<AuthenticationState> emit,
+  ) async {
+    try {
+      emit(const _Loading());
+      final customer = await _authenticationRepository.getSignedInCustomer();
+      if (customer != null) {
+        emit(_Success(customer: customer));
+      }
     } on Object catch (error) {
       emit(_Failure(message: error.toString()));
     } finally {

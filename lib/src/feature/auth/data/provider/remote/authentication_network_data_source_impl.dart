@@ -1,10 +1,8 @@
 import 'package:shopify_example/src/core/components/graphql_client/graph_ql_client.dart';
 import 'package:shopify_example/src/core/components/graphql_client/query/mutation/customer_access_token_create.dart';
 import 'package:shopify_example/src/core/components/graphql_client/query/mutation/customer_access_token_delete.dart';
-import 'package:shopify_example/src/core/components/graphql_client/query/query/get_customer.dart';
 import 'package:shopify_example/src/feature/auth/data/provider/remote/authentication_network_data_source.dart';
 import 'package:shopify_example/src/feature/auth/model/customer_access_token_model.dart';
-import 'package:shopify_example/src/feature/auth/model/customer_model.dart';
 
 final class AuthenticationNetworkDataSourceImpl
     implements AuthenticationNetworkDataSource {
@@ -13,20 +11,6 @@ final class AuthenticationNetworkDataSourceImpl
   }) : _shopifyGraphQLClient = shopifyGraphQLClient;
 
   final ShopifyGraphQLClient _shopifyGraphQLClient;
-
-  @override
-  Future<CustomerModel> signInWithAccessToken({
-    required final CustomerAccessTokenModel customerAccessToken,
-  }) async {
-    final response = await _shopifyGraphQLClient.query(
-      document: getCustomerQuery,
-      variables: {
-        'customerAccessToken': customerAccessToken.accessToken,
-      },
-    );
-    return AuthenticatedCustomerModel.fromJson(
-        response.data?['customer'] ?? {});
-  }
 
   @override
   Future<CustomerAccessTokenModel> createAccessToken({

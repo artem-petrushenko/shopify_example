@@ -47,11 +47,11 @@ class _LoginViewState extends State<LoginView> {
             child: Column(
               children: [
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'Email'),
+                  decoration: const InputDecoration(labelText: 'Email'),
                   controller: _emailController,
                 ),
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'Password'),
+                  decoration: const InputDecoration(labelText: 'Password'),
                   controller: _passwordController,
                 ),
                 BlocBuilder<AuthenticationBloc, AuthenticationState>(
@@ -65,22 +65,6 @@ class _LoginViewState extends State<LoginView> {
                     child: const Text('Login'),
                   ),
                 ),
-                BlocBuilder<AuthenticationBloc, AuthenticationState>(
-                  builder: (context, state) => ElevatedButton(
-                    onPressed: () => context.read<AuthenticationBloc>().add(
-                          const AuthenticationEvent.logOut(),
-                        ),
-                    child: const Text('Logout'),
-                  ),
-                ),
-                BlocBuilder<AuthenticationBloc, AuthenticationState>(
-                  builder: (BuildContext context, AuthenticationState state) =>
-                      state.maybeMap(
-                    orElse: () => Text('Empty'),
-                    authenticated: (state) => Text('Authenticated'),
-                    notAuthenticated: (state) => Text('Unauthenticated'),
-                  ),
-                )
               ],
             ),
           ),

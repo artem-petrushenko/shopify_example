@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shopify_example/src/feature/auth/bloc/authentication/authentication_bloc.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
@@ -8,8 +10,13 @@ class ProfileView extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Profile'),
         ),
-        body: const Center(
-          child: Text('Profile View'),
+        body: Center(
+          child: ElevatedButton(
+            onPressed: () => context
+                .read<AuthenticationBloc>()
+                .add(const AuthenticationEvent.logOut()),
+            child: const Text('Log Out'),
+          ),
         ),
       );
 }
