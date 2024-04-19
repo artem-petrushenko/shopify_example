@@ -1,6 +1,7 @@
-import 'package:shopify_example/src/feature/product_details/data/provider/products_network_data_provider.dart';
+import 'package:shopify_example/src/feature/product_details/data/provider/remote/products_network_data_provider.dart';
 import 'package:shopify_example/src/feature/product_details/data/repository/products_repository.dart';
 import 'package:shopify_example/src/feature/product_details/model/product_details_model.dart';
+import 'package:shopify_example/src/feature/product_details/model/product_recommendations_response_model.dart';
 import 'package:shopify_example/src/feature/product_details/model/product_variant_response_model.dart';
 
 class ProductsRepositoryImpl implements ProductsRepository {
@@ -22,4 +23,10 @@ class ProductsRepositoryImpl implements ProductsRepository {
     final int first = 8,
   }) async =>
       await _productsNetworkDataProvider.getProductVariant(id: id);
+
+  @override
+  Future<ProductRecommendationsResponseModel> getRecommendations({
+    required final String id,
+  }) async =>
+      await _productsNetworkDataProvider.getRecommendations(id: id);
 }

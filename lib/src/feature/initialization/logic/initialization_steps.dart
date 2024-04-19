@@ -17,7 +17,7 @@ import 'package:shopify_example/src/feature/collection/data/repository/collectio
 import 'package:shopify_example/src/feature/collections/data/provider/remote/collections_network_data_provider_impl.dart';
 import 'package:shopify_example/src/feature/collections/data/repository/collections_repository_impl.dart';
 import 'package:shopify_example/src/feature/initialization/model/initialization_proccess.dart';
-import 'package:shopify_example/src/feature/product_details/data/provider/products_network_data_provider_impl.dart';
+import 'package:shopify_example/src/feature/product_details/data/provider/remote/products_network_data_provider_impl.dart';
 import 'package:shopify_example/src/feature/product_details/data/repository/products_repository_impl.dart';
 
 /// A function which represents a single initialization step.
