@@ -14,5 +14,6 @@ abstract interface class ProductsRepository {
 
   Future<ProductRecommendationsResponseModel> getRecommendations({
     required final String id,
+    final int? productFirst,
   });
 }

@@ -35,11 +35,11 @@ class ProductRecommendationsCart extends StatelessWidget {
                           child: state.maybeMap(
                             loading: (state) =>
                                 const CircularProgressIndicator(),
-                            failure: (state) => Icon(Icons.cancel_outlined),
+                            failure: (state) => const Icon(Icons.cancel_outlined),
                             success: (state) =>
-                                Icon(Icons.check_circle_outlined),
+                                const Icon(Icons.check_circle_outlined),
                             orElse: () =>
-                                Icon(Icons.add_shopping_cart_outlined),
+                                const Icon(Icons.add_shopping_cart_outlined),
                           ),
                         )),
               ],

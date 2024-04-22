@@ -37,7 +37,7 @@ class ProductsNetworkDataProviderImpl implements ProductsNetworkDataProvider {
       document: getProductVariantQuery,
       variables: {
         'id': id,
-        'first': first,
+        'productFirst': first,
       },
     );
     return ProductVariantResponseModel.fromJson(response.data?['product'] ?? {});
@@ -46,11 +46,13 @@ class ProductsNetworkDataProviderImpl implements ProductsNetworkDataProvider {
   @override
   Future<ProductRecommendationsResponseModel> getRecommendations({
     required final String id,
+    final int? productFirst,
   }) async {
     final response = await _shopifyGraphQLClient.query(
       document: getProductRecommendationsQuery,
       variables: {
         'productId': id,
+        'productFirst': productFirst,
       },
     );
     return ProductRecommendationsResponseModel.fromJson(response.data ?? {});

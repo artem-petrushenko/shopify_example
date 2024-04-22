@@ -14,5 +14,6 @@ abstract interface class ProductsNetworkDataProvider {
 
   Future<ProductRecommendationsResponseModel> getRecommendations({
     required final String id,
+    final int? productFirst,
   });
 }

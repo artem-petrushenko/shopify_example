@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:shopify_example/src/core/logger.dart';
 import 'package:shopify_example/src/feature/product_details/data/repository/products_repository.dart';
-import 'package:shopify_example/src/feature/product_details/model/product_model.dart';
+import 'package:shopify_example/src/feature/product_details/model/product_recommendations_model.dart';
 
 part 'fetch_product_recommendations_event.dart';
 
@@ -28,7 +28,7 @@ class FetchProductRecommendationsBloc extends Bloc<
   final String _id;
   final ProductsRepository _productsRepository;
 
-  List<ProductModel> get _oldProducts => state.maybeMap(
+  List<ProductRecommendationsModel> get _oldProducts => state.maybeMap(
         loading: (state) => state.oldProducts,
         success: (state) => state.products,
         failure: (state) => state.oldProducts,
@@ -43,7 +43,7 @@ class FetchProductRecommendationsBloc extends Bloc<
 
     try {
       emit(const _Loading());
-      final products = await _productsRepository.getRecommendations(id: _id);
+      final products = await _productsRepository.getRecommendations(id: _id, productFirst: 8);
       emit(_Success(products: products.productRecommendations));
     } on Object catch (error, stackTrace) {
       logger.error(

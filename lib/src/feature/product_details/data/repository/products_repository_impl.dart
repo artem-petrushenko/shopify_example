@@ -27,6 +27,10 @@ class ProductsRepositoryImpl implements ProductsRepository {
   @override
   Future<ProductRecommendationsResponseModel> getRecommendations({
     required final String id,
+    final int? productFirst,
   }) async =>
-      await _productsNetworkDataProvider.getRecommendations(id: id);
+      await _productsNetworkDataProvider.getRecommendations(
+        id: id,
+        productFirst: productFirst,
+      );
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shopify_example/src/common/routes/routes.dart';
-import 'package:shopify_example/src/feature/product_details/model/product_model.dart';
+import 'package:shopify_example/src/feature/product_details/model/product_recommendations_model.dart';
 import 'package:shopify_example/src/feature/product_details/widget/product_recommendations_cart.dart';
 
 class ProductRecommendationsListBuilder extends StatelessWidget {
@@ -11,7 +11,7 @@ class ProductRecommendationsListBuilder extends StatelessWidget {
     this.height = 100.0,
   });
 
-  final List<ProductModel> products;
+  final List<ProductRecommendationsModel> products;
   final double height;
 
   @override
@@ -25,8 +25,7 @@ class ProductRecommendationsListBuilder extends StatelessWidget {
               Routes.productDetails,
               extra: products[index].id,
             ),
-            // TODO: Replace with the actual merchandiseId
-            merchandiseId: 'gid://shopify/ProductVariant/43376658219184',
+            merchandiseId: products[index].variants.variants.first.id,
           ),
           itemCount: products.length,
         ),

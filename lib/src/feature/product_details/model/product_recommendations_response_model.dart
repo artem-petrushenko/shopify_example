@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:shopify_example/src/feature/product_details/model/product_model.dart';
+import 'package:shopify_example/src/feature/product_details/model/product_recommendations_model.dart';
 
 part 'product_recommendations_response_model.g.dart';
 
@@ -10,7 +10,7 @@ class ProductRecommendationsResponseModel extends Equatable {
     required this.productRecommendations,
   });
 
-  final List<ProductModel> productRecommendations;
+  final List<ProductRecommendationsModel> productRecommendations;
 
   factory ProductRecommendationsResponseModel.fromJson(
           Map<String, dynamic> json) =>
