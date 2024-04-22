@@ -7,15 +7,17 @@ part 'product_variant_model.g.dart';
 class ProductVariantModel extends Equatable {
   final bool availableForSale;
   final String id;
+  final String title;
 
   const ProductVariantModel({
     required this.availableForSale,
     required this.id,
+    required this.title,
   });
 
   factory ProductVariantModel.fromJson(Map<String, dynamic> json) =>
       _$ProductVariantModelFromJson(json);
 
   @override
-  List<Object?> get props => [availableForSale, id];
+  List<Object?> get props => [availableForSale, id, title];
 }

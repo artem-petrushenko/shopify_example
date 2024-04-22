@@ -3,6 +3,7 @@ String productVariant = '''
         nodes {
           availableForSale
           id
+          title
         }
       }
 ''';

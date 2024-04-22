@@ -68,7 +68,6 @@ class ProductDetailsContent extends StatelessWidget {
                             SelectorProductConfigurationState>(
                           builder: (context, state) =>
                               ProductConfigurationSelector(
-                            selectedIndex: state.selectedIndex,
                             onPressed: (index) => context
                                 .read<SelectorProductConfigurationCubit>()
                                 .changeConfiguration(index),
