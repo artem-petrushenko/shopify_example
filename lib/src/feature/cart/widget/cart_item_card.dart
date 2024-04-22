@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopify_example/src/feature/cart/model/selected_options_model.dart';
 
 class CartItemCard extends StatelessWidget {
   const CartItemCard({
@@ -9,6 +10,7 @@ class CartItemCard extends StatelessWidget {
     required this.onDeletePressed,
     required this.onMinusPressed,
     required this.onPlusPressed,
+    required this.selectedOptions,
   });
 
   final String itemName;
@@ -17,6 +19,7 @@ class CartItemCard extends StatelessWidget {
   final VoidCallback onDeletePressed;
   final VoidCallback onMinusPressed;
   final VoidCallback onPlusPressed;
+  final List<SelectedOptionsModel> selectedOptions;
 
   @override
   Widget build(BuildContext context) => Row(
@@ -28,6 +31,11 @@ class CartItemCard extends StatelessWidget {
                 Text(itemName),
                 Text(itemPrice),
                 Text(itemQuantity.toString()),
+                Wrap(
+                    children: selectedOptions
+                        .map((option) =>
+                            Chip(label: Text('${option.name}: ${option.value}')))
+                        .toList()),
               ],
             ),
           ),

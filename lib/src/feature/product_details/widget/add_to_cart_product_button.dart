@@ -14,7 +14,6 @@ class AddToCartProductButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) => BlocProvider(
         create: (BuildContext context) => ChangedCartBloc(
-          merchandiseId,
           cartRepository: DependenciesScope.of(context).cartRepository,
         ),
         child: BlocConsumer<ChangedCartBloc, ChangedCartState>(
@@ -31,7 +30,9 @@ class AddToCartProductButton extends StatelessWidget {
               ElevatedButton(
             onPressed: () => context
                 .read<ChangedCartBloc>()
-                .add(const ChangedCartEvent.addItemToCart()),
+                .add( ChangedCartEvent.addItemToCart(
+              itemId: merchandiseId,
+            )),
             child: state.maybeMap(
               loading: (state) => const CircularProgressIndicator(),
               failure: (state) => const Text('Failure'),

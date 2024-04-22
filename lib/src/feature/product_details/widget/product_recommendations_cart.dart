@@ -18,7 +18,7 @@ class ProductRecommendationsCart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocProvider(
-        create: (context) => ChangedCartBloc(merchandiseId,
+        create: (context) => ChangedCartBloc(
             cartRepository: DependenciesScope.of(context).cartRepository),
         child: NoSplashInkWell(
           onTap: onTap,
@@ -31,11 +31,14 @@ class ProductRecommendationsCart extends StatelessWidget {
                     builder: (context, state) => ElevatedButton(
                           onPressed: () => context
                               .read<ChangedCartBloc>()
-                              .add(const ChangedCartEvent.addItemToCart()),
+                              .add(ChangedCartEvent.addItemToCart(
+                                itemId: merchandiseId,
+                              )),
                           child: state.maybeMap(
                             loading: (state) =>
                                 const CircularProgressIndicator(),
-                            failure: (state) => const Icon(Icons.cancel_outlined),
+                            failure: (state) =>
+                                const Icon(Icons.cancel_outlined),
                             success: (state) =>
                                 const Icon(Icons.check_circle_outlined),
                             orElse: () =>

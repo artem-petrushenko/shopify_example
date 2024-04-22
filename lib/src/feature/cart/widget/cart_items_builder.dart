@@ -17,7 +17,6 @@ class CartItemsBuilder extends StatelessWidget {
   Widget build(BuildContext context) => ListView.builder(
         itemBuilder: (BuildContext context, int index) => BlocProvider(
           create: (context) => ChangedCartBloc(
-            cartItems[index].id,
             cartRepository: DependenciesScope.of(context).cartRepository,
           ),
           child: BlocConsumer<ChangedCartBloc, ChangedCartState>(
@@ -37,13 +36,22 @@ class CartItemsBuilder extends StatelessWidget {
               itemQuantity: cartItems[index].quantity,
               onDeletePressed: () => context
                   .read<ChangedCartBloc>()
-                  .add(const ChangedCartEvent.removeItemFromCart()),
-              onMinusPressed: () => context.read<ChangedCartBloc>().add(
-                  ChangedCartEvent.updateItemInCart(
-                      quantity: cartItems[index].quantity - 1)),
-              onPlusPressed: () => context.read<ChangedCartBloc>().add(
-                  ChangedCartEvent.updateItemInCart(
-                      quantity: cartItems[index].quantity + 1)),
+                  .add(ChangedCartEvent.removeItemFromCart(
+                    itemId: cartItems[index].id,
+                  )),
+              onMinusPressed: () => context
+                  .read<ChangedCartBloc>()
+                  .add(ChangedCartEvent.updateItemInCart(
+                    quantity: cartItems[index].quantity - 1,
+                    itemId: cartItems[index].id,
+                  )),
+              onPlusPressed: () => context
+                  .read<ChangedCartBloc>()
+                  .add(ChangedCartEvent.updateItemInCart(
+                    quantity: cartItems[index].quantity + 1,
+                    itemId: cartItems[index].id,
+                  )),
+              selectedOptions: cartItems[index].merchandise.selectedOptions,
             ),
           ),
         ),

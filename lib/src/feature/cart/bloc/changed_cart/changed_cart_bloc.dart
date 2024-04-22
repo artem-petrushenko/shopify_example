@@ -10,8 +10,7 @@ part 'changed_cart_state.dart';
 part 'changed_cart_bloc.freezed.dart';
 
 class ChangedCartBloc extends Bloc<ChangedCartEvent, ChangedCartState> {
-  ChangedCartBloc(
-    this.itemId, {
+  ChangedCartBloc({
     required final CartRepository cartRepository,
   })  : _cartRepository = cartRepository,
         super(const _Initial()) {
@@ -24,7 +23,6 @@ class ChangedCartBloc extends Bloc<ChangedCartEvent, ChangedCartState> {
     );
   }
 
-  final String itemId;
   final CartRepository _cartRepository;
 
   Future<void> _onAddItemToCart(
@@ -35,7 +33,7 @@ class ChangedCartBloc extends Bloc<ChangedCartEvent, ChangedCartState> {
     try {
       emit(const _Loading());
       await _cartRepository.addProductToCart(
-        productId: itemId,
+        productId: event.itemId,
         quantity: event.quantity,
       );
       emit(const _Success());
@@ -56,7 +54,7 @@ class ChangedCartBloc extends Bloc<ChangedCartEvent, ChangedCartState> {
     if (state is _Loading) return;
     try {
       emit(const _Loading());
-      await _cartRepository.removeProductFromCart(linesIds: [itemId]);
+      await _cartRepository.removeProductFromCart(linesIds: [event.itemId]);
       emit(const _Success());
     } on Object catch (error, stackTrace) {
       logger.error(
@@ -76,7 +74,7 @@ class ChangedCartBloc extends Bloc<ChangedCartEvent, ChangedCartState> {
     try {
       emit(const _Loading());
       await _cartRepository.updateProductInCart(
-        lineId: itemId,
+        lineId: event.itemId,
         quantity: event.quantity,
       );
       emit(const _Success());
