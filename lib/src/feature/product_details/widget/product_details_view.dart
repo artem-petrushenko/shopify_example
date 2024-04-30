@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shopify_example/src/common/widget/progress_indicator/default_circular_progress_indicator.dart';
 import 'package:shopify_example/src/common/widget/refresh_indicator/default_refresh_indicator.dart';
 import 'package:shopify_example/src/feature/initialization/widget/dependency_scope.dart';
 import 'package:shopify_example/src/feature/product_details/bloc/fetch_product_details/fetch_product_details_bloc.dart';
@@ -43,7 +44,7 @@ class ProductDetailsView extends StatelessWidget {
                   loading: (state) => state.oldProductDetails != null
                       ? ProductDetailsContent(
                           productDetails: state.oldProductDetails!)
-                      : const CircularProgressIndicator(),
+                      : const DefaultCircularProgressIndicator(),
                   success: (state) => ProductDetailsContent(
                     productDetails: state.productDetails,
                   ),
@@ -51,7 +52,7 @@ class ProductDetailsView extends StatelessWidget {
                       ? ProductDetailsContent(
                           productDetails: state.oldProductDetails!)
                       : const Text('Failure'),
-                  orElse: () => const CircularProgressIndicator(),
+                  orElse: () => const DefaultCircularProgressIndicator(),
                 ),
               ),
             ),
