@@ -63,17 +63,20 @@ class ProductDetailsContent extends StatelessWidget {
                       builder: (BuildContext context,
                               FetchProductVariantsState state) =>
                           state.maybeMap(
-                        success: (configurationState) => BlocBuilder<
-                            SelectorProductConfigurationCubit,
-                            SelectorProductConfigurationState>(
-                          builder: (context, state) =>
-                              ProductConfigurationSelector(
-                            onPressed: (index) => context
-                                .read<SelectorProductConfigurationCubit>()
-                                .changeConfiguration(index),
-                            variants: configurationState.variants,
-                          ),
-                        ),
+                        success: (configurationState) => configurationState
+                                    .variants.length >
+                                1
+                            ? BlocBuilder<SelectorProductConfigurationCubit,
+                                SelectorProductConfigurationState>(
+                                builder: (context, state) =>
+                                    ProductConfigurationSelector(
+                                  onPressed: (index) => context
+                                      .read<SelectorProductConfigurationCubit>()
+                                      .changeConfiguration(index),
+                                  variants: configurationState.variants,
+                                ),
+                              )
+                            : const SizedBox(),
                         orElse: () => const SizedBox(),
                       ),
                     ),
