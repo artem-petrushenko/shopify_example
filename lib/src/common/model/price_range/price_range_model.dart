@@ -1,13 +1,13 @@
 import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:shopify_example/src/common/model/variant_price/variant_price_model.dart';
+import 'package:shopify_example/src/common/model/variant_price/price_model.dart';
 
 part 'price_range_model.g.dart';
 
 @JsonSerializable()
 class PriceRangeModel extends Equatable {
-  final VariantPriceModel maxVariantPrice;
-  final VariantPriceModel minVariantPrice;
+  final PriceModel maxVariantPrice;
+  final PriceModel minVariantPrice;
 
   const PriceRangeModel({
     required this.maxVariantPrice,

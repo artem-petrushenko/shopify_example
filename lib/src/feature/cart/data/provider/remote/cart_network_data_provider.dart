@@ -1,4 +1,5 @@
 import 'package:shopify_example/src/feature/cart/model/cart_items_response_model.dart';
+import 'package:shopify_example/src/feature/cart/model/cost/cart_cost_response_model.dart';
 import 'package:shopify_example/src/feature/cart/model/create_cart_model.dart';
 
 abstract interface class CartNetworkDataProvider {
@@ -24,5 +25,9 @@ abstract interface class CartNetworkDataProvider {
     required final String cartId,
     required final String lineId,
     required final int quantity,
+  });
+
+  Future<CartCostResponseModel> fetchCheckoutCart({
+    required final String cartId,
   });
 }

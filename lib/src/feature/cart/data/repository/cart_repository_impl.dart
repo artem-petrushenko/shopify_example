@@ -2,6 +2,7 @@ import 'package:shopify_example/src/feature/cart/data/provider/local/cart_storag
 import 'package:shopify_example/src/feature/cart/data/provider/remote/cart_network_data_provider.dart';
 import 'package:shopify_example/src/feature/cart/data/repository/cart_repository.dart';
 import 'package:shopify_example/src/feature/cart/model/cart_items_response_model.dart';
+import 'package:shopify_example/src/feature/cart/model/cost/cart_cost_response_model.dart';
 
 class CartRepositoryImpl implements CartRepository {
   const CartRepositoryImpl({
@@ -69,5 +70,11 @@ class CartRepositoryImpl implements CartRepository {
       lineId: lineId,
       quantity: quantity,
     );
+  }
+
+  @override
+  Future<CartCostResponseModel> fetchCheckoutCart() async {
+    final cartId = await _fetchCartId();
+    return await _cartNetworkDataProvider.fetchCheckoutCart(cartId: cartId);
   }
 }

@@ -3,9 +3,11 @@ import 'package:shopify_example/src/core/components/graphql_client/query/mutatio
 import 'package:shopify_example/src/core/components/graphql_client/query/mutation/cart_lines_add.dart';
 import 'package:shopify_example/src/core/components/graphql_client/query/mutation/cart_lines_remote.dart';
 import 'package:shopify_example/src/core/components/graphql_client/query/mutation/cart_lines_update.dart';
+import 'package:shopify_example/src/core/components/graphql_client/query/query/get_cart_cost.dart';
 import 'package:shopify_example/src/core/components/graphql_client/query/query/get_cart_items.dart';
 import 'package:shopify_example/src/feature/cart/data/provider/remote/cart_network_data_provider.dart';
 import 'package:shopify_example/src/feature/cart/model/cart_items_response_model.dart';
+import 'package:shopify_example/src/feature/cart/model/cost/cart_cost_response_model.dart';
 import 'package:shopify_example/src/feature/cart/model/create_cart_model.dart';
 
 class CartNetworkDataProviderImpl implements CartNetworkDataProvider {
@@ -80,4 +82,17 @@ class CartNetworkDataProviderImpl implements CartNetworkDataProvider {
           'quantity': quantity,
         },
       );
+
+  @override
+  Future<CartCostResponseModel> fetchCheckoutCart({
+    required final String cartId,
+  }) async {
+    final response = await _shopifyGraphQLClient.query(
+      document: getCartCostQuery,
+      variables: {
+        'id': cartId,
+      },
+    );
+    return CartCostResponseModel.fromJson(response.data?['cart'] ?? {});
+  }
 }
