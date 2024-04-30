@@ -29,4 +29,7 @@ class PriceModel extends Equatable {
         priceFormat: priceFormat,
         locale: (locale != null && locale.isEmpty) ? null : locale,
       );
+
+  String formatPrice({String? locale}) =>
+      '${formattedPriceWithLocale(locale: locale)} $currencyCode';
 }

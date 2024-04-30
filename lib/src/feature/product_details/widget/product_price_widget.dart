@@ -15,11 +15,9 @@ class ProductPriceWidget extends StatelessWidget {
           success: (state) => BlocBuilder<SelectorProductConfigurationCubit,
               SelectorProductConfigurationState>(
             builder: (context, selector) => ProductPrice(
-              price:
-                  '${state.variants[selector.selectedIndex].price.formattedPriceWithLocale()} ${state.variants[selector.selectedIndex].price.currencyCode}',
-              salePrice: state.variants[selector.selectedIndex].compareAtPrice != null
-                  ? '${state.variants[selector.selectedIndex].compareAtPrice?.formattedPriceWithLocale()} ${state.variants[selector.selectedIndex].compareAtPrice?.currencyCode}'
-                  : null,
+              price: state.variants[selector.selectedIndex].price.formatPrice(),
+              salePrice: state.variants[selector.selectedIndex].compareAtPrice
+                  ?.formatPrice(),
             ),
           ),
           orElse: () => const SizedBox(),

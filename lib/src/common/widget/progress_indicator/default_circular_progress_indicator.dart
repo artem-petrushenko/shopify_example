@@ -5,14 +5,19 @@ class DefaultCircularProgressIndicator extends StatelessWidget {
     super.key,
     this.value,
     this.strokeCap = StrokeCap.round,
+    this.alignment = Alignment.center,
   });
 
   final double? value;
   final StrokeCap? strokeCap;
+  final AlignmentGeometry alignment;
 
   @override
-  Widget build(BuildContext context) => CircularProgressIndicator(
-        strokeCap: strokeCap,
-        value: value,
+  Widget build(BuildContext context) => Align(
+        alignment: alignment,
+        child: CircularProgressIndicator(
+          strokeCap: strokeCap,
+          value: value,
+        ),
       );
 }

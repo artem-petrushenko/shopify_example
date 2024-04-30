@@ -38,12 +38,6 @@ class ProductPrice extends StatelessWidget {
               if (salePrice != null) const SaleChip(),
             ],
           ),
-          Text(
-            'Tax included',
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Colors.grey,
-                ),
-          ),
         ],
       );
 }
