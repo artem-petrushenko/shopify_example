@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shopify_example/src/feature/cart/model/discount_allocations_model.dart';
 import 'package:shopify_example/src/feature/cart/model/selected_options_model.dart';
+import 'package:shopify_example/src/feature/cart/widget/discount_widget.dart';
 
 class CartItemCard extends StatelessWidget {
   const CartItemCard({
@@ -11,6 +13,7 @@ class CartItemCard extends StatelessWidget {
     required this.onMinusPressed,
     required this.onPlusPressed,
     required this.selectedOptions,
+    required this.discounts,
   });
 
   final String itemName;
@@ -20,6 +23,7 @@ class CartItemCard extends StatelessWidget {
   final VoidCallback onMinusPressed;
   final VoidCallback onPlusPressed;
   final List<SelectedOptionsModel> selectedOptions;
+  final List<DiscountAllocationsModel> discounts;
 
   @override
   Widget build(BuildContext context) => Row(
@@ -31,10 +35,12 @@ class CartItemCard extends StatelessWidget {
                 Text(itemName),
                 Text(itemPrice),
                 Text(itemQuantity.toString()),
+                if (_discountsList.isNotEmpty)
+                  DiscountWidget(discounts: _discountsList),
                 Wrap(
                     children: selectedOptions
-                        .map((option) =>
-                            Chip(label: Text('${option.name}: ${option.value}')))
+                        .map((option) => Chip(
+                            label: Text('${option.name}: ${option.value}')))
                         .toList()),
               ],
             ),
@@ -53,4 +59,12 @@ class CartItemCard extends StatelessWidget {
           ),
         ],
       );
+
+  String _discountValue(DiscountAllocationsModel discount) =>
+      '${discount.title} (-${discount.discountedAmount.formattedPriceWithLocale()})';
+
+  List<String> get _discountsList => discounts
+      .where((element) => double.tryParse(element.discountedAmount.amount) != 0)
+      .map((e) => _discountValue(e))
+      .toList();
 }

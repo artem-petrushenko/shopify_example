@@ -21,11 +21,11 @@ class CartItemsWidget extends StatelessWidget {
           ),
           Column(
             children: [
-              CartCheckoutWidget(),
+              const CartCheckoutWidget(),
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {},
-                child: Text('Check out'),
+                child: const Text('Check out'),
               ),
             ],
           ),
