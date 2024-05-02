@@ -14,6 +14,7 @@ class CartItemCard extends StatelessWidget {
     required this.onPlusPressed,
     required this.selectedOptions,
     required this.discounts,
+    required this.isAvailableForSale,
   });
 
   final String itemName;
@@ -24,6 +25,7 @@ class CartItemCard extends StatelessWidget {
   final VoidCallback onPlusPressed;
   final List<SelectedOptionsModel> selectedOptions;
   final List<DiscountAllocationsModel> discounts;
+  final bool isAvailableForSale;
 
   @override
   Widget build(BuildContext context) => Row(
@@ -37,6 +39,7 @@ class CartItemCard extends StatelessWidget {
                 Text(itemQuantity.toString()),
                 if (_discountsList.isNotEmpty)
                   DiscountWidget(discounts: _discountsList),
+                Text(isAvailableForSale ? 'Available' : 'Unavailable'),
                 Wrap(
                     children: selectedOptions
                         .map((option) => Chip(

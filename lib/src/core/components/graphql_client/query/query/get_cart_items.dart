@@ -17,6 +17,7 @@ final String getCartItemQuery = '''
           merchandise {
             ... on ProductVariant {
               id
+              availableForSale
               $selectedOptions
               product {
                 $product

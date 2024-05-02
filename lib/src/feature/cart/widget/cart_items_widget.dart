@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:shopify_example/src/common/routes/routes.dart';
 import 'package:shopify_example/src/feature/cart/model/cart_item_model.dart';
 import 'package:shopify_example/src/feature/cart/widget/cart_checkout_widget.dart';
 import 'package:shopify_example/src/feature/cart/widget/cart_items_builder.dart';
@@ -24,7 +26,7 @@ class CartItemsWidget extends StatelessWidget {
               const CartCheckoutWidget(),
               const SizedBox(height: 16),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () => context.push(Routes.checkout),
                 child: const Text('Check out'),
               ),
             ],

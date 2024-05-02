@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shopify_example/src/core/components/graphql_client/query_component/discount_allocations.dart';
 import 'package:shopify_example/src/feature/cart/bloc/changed_cart/changed_cart_bloc.dart';
 import 'package:shopify_example/src/feature/cart/model/cart_item_model.dart';
 import 'package:shopify_example/src/feature/cart/widget/cart_item_card.dart';
@@ -54,6 +53,7 @@ class CartItemsBuilder extends StatelessWidget {
                   )),
               selectedOptions: cartItems[index].merchandise.selectedOptions,
               discounts: cartItems[index].discountAllocations,
+              isAvailableForSale: cartItems[index].merchandise.availableForSale,
             ),
           ),
         ),

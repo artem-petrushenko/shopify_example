@@ -8,11 +8,13 @@ part 'merchandise_model.g.dart';
 @JsonSerializable()
 class MerchandiseModel extends Equatable {
   final String id;
+  final bool availableForSale;
   final ProductModel product;
   final List<SelectedOptionsModel> selectedOptions;
 
   const MerchandiseModel({
     required this.id,
+    required this.availableForSale,
     required this.product,
     required this.selectedOptions,
   });
@@ -21,5 +23,5 @@ class MerchandiseModel extends Equatable {
       _$MerchandiseModelFromJson(json);
 
   @override
-  List<Object?> get props => [id, product, selectedOptions];
+  List<Object?> get props => [id, product, selectedOptions, availableForSale];
 }
