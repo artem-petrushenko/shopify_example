@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:shopify_example/src/common/scaffold/scaffold_with_nav_bar.dart';
 import 'package:shopify_example/src/common/view_selector/profile_view_selector.dart';
 import 'package:shopify_example/src/feature/cart/widget/cart_view.dart';
-import 'package:shopify_example/src/feature/checkout/checkout_view.dart';
+import 'package:shopify_example/src/feature/checkout/widget/checkout_view.dart';
 import 'package:shopify_example/src/feature/collection/widget/collection_details_view.dart';
 import 'package:shopify_example/src/feature/collections/widget/collections_view.dart';
 import 'package:shopify_example/src/feature/product_details/widget/product_details_view.dart';

@@ -9,6 +9,7 @@ import 'package:shopify_example/src/feature/auth/data/provider/local/session_sto
 import 'package:shopify_example/src/feature/auth/data/provider/remote/authentication_network_data_source_impl.dart';
 import 'package:shopify_example/src/feature/auth/data/provider/remote/customer_network_data_source_impl.dart';
 import 'package:shopify_example/src/feature/auth/data/repository/authentication_repository_impl.dart';
+import 'package:shopify_example/src/feature/auth/data/repository/customer_repository_impl.dart';
 import 'package:shopify_example/src/feature/cart/data/provider/local/cart_storage_impl.dart';
 import 'package:shopify_example/src/feature/cart/data/provider/remote/cart_network_data_provider_impl.dart';
 import 'package:shopify_example/src/feature/cart/data/repository/cart_repository_impl.dart';
@@ -98,6 +99,18 @@ mixin InitializationSteps {
         cartStorage: cartStorage,
       );
       progress.dependencies.cartRepository = cartRepository;
+    },
+    'Customer Repository': (progress) async {
+      final customerNetworkDataSource = CustomerNetworkDataSourceImpl(
+        shopifyGraphQLClient: progress.dependencies.graphQLClient,
+      );
+      final customerRepository = CustomerRepositoryImpl(
+        customerNetworkDataSource: customerNetworkDataSource,
+        sessionStorage: SessionStorageImpl(
+          sharedPreferences: progress.dependencies.preferencesDao,
+        ),
+      );
+      progress.dependencies.customerRepository = customerRepository;
     },
   };
 }

@@ -6,6 +6,7 @@ abstract interface class AuthenticationRepository {
     required final String password,
   });
 
+  // TODO: Maybe this moved to CustomerRepository?
   Future<CustomerModel?> getSignedInCustomer();
 
   Future<void> logOut();
